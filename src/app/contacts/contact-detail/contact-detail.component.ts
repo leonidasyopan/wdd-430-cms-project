@@ -8,7 +8,7 @@ import { Contact } from '../contact.model'
   styleUrls: ['./contact-detail.component.css']
 })
 export class ContactDetailComponent implements OnInit {
-  contact = new Contact(
+  contact: Contact = new Contact(
     "1",
     "R. Kent Jackson",
     "jacksonk@byui.edu",
