@@ -1,0 +1,19 @@
+section.conctact-list-box {
+  border: 1px solid #ddd;
+}
+
+header {
+  padding: 0 10px;
+  background: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h3 {
+  font-weight: bold;
+}
+
+.row {
+  padding: 10px;
+}

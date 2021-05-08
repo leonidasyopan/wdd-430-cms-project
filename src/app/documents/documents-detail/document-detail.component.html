@@ -1,0 +1,20 @@
+<section class="conctact-list-box">
+  <header>
+    <h3>{{ document.name }}</h3>
+    <div class="header-image-and-buttons">
+      <div class="pull-left">
+        <a href="{{ document.url }}">Download</a>
+      </div>
+      <div class="pull-right">
+        <button type="button" class="btn btn-success">View</button>
+        <button type="button" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </header>
+  <div class="row">
+    <div class="col-xs-12">
+      <p><strong>Description:</strong> {{ document.description }}</p>
+    </div>
+  </div>
+</section>

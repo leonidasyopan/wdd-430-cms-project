@@ -1,0 +1,15 @@
+<section class="document-list-box">
+  <header>
+    <div><h3>Document</h3></div>
+    <div><button type="button" class="btn btn-success">New Document</button></div>
+  </header>
+  <div class="row">
+    <div class="col-xs-12">
+      <cms-document-item
+        *ngFor="let documentEl of documents"
+        [document]="documentEl"
+        (click)="onSelected(documentEl)"
+        ></cms-document-item>
+    </div>
+  </div>
+</section>
