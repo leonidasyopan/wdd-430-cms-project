@@ -10,8 +10,8 @@ export class HeaderComponent implements OnInit {
 
   collapsed = true;
 
-  onSelect(feature: string) {
-    this.selectedFeatureEvent.emit(feature);
+  onSelected(selectedEvent: string) {
+    this.selectedFeatureEvent.emit(selectedEvent);
   }
 
   constructor() { }
