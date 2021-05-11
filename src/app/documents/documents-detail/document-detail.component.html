@@ -1,20 +1,25 @@
-<section class="conctact-list-box">
-  <header>
-    <h3>{{ document.name }}</h3>
-    <div class="header-image-and-buttons">
-      <div class="pull-left">
-        <a href="{{ document.url }}">Download</a>
+<div class="panel panel-default" xmlns="http://www.w3.org/1999/html">
+  <div class="panel-heading">
+    <div class="row pad-all">
+      <h4 class="title margin-left-right">{{ document?.name }}</h4>
+      <div class="row pull-right margin-left-right">
+        <a class="btn btn-primary spaced-button">View</a>
+        <a class="btn btn-info spaced-button">Edit</a>
+        <a class="btn btn-danger spaced-button">Delete</a>
       </div>
-      <div class="pull-right">
-        <button type="button" class="btn btn-success">View</button>
-        <button type="button" class="btn btn-primary">Edit</button>
-        <button type="button" class="btn btn-danger">Delete</button>
-      </div>
-    </div>
-  </header>
-  <div class="row">
-    <div class="col-xs-12">
-      <p><strong>Description:</strong> {{ document.description }}</p>
     </div>
   </div>
-</section>
+  <div class="panel-body">
+    <div class="pad-left-right">
+      <div class="row">
+        <strong>Description: </strong>
+        <span class="label-value">{{ document?.description }}</span>
+      </div>
+      <br>
+      <div class="row">
+        <strong>URL: </strong>
+        <a href="{{ document?.url }}"><span class="label-value">{{ document?.url }}</span></a>
+      </div>
+    </div>
+  </div>
+</div>

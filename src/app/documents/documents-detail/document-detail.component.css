@@ -1,31 +1,19 @@
-section.conctact-list-box {
-  border: 1px solid #ddd;
-}
-
-header {
-  background: #f8f8f8;
-  padding: 10px 15px;
-}
-
-.header-image-and-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-h3 {
-  font-weight: bold;
-  margin: 15px 0;
-}
-
-p {
-  margin: 3px 0;
-}
-
-.row {
-  padding: 10px 15px 10px 15px;
-}
-
-button {
+.spaced-button {
   margin-left: 5px;
+}
+
+.title {
+  font-weight: bold;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.margin-left-right {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.pad-left-right {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }

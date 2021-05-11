@@ -1,15 +1,18 @@
-<section class="document-list-box">
-  <header>
-    <div><h3>Document</h3></div>
-    <div><button type="button" class="btn btn-success">New Document</button></div>
-  </header>
-  <div class="row">
-    <div class="col-xs-12">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row pad-left-right">
+      <span class="pull-left title">Documents</span>
+      <a class="btn btn-success pull-right">Add Document</a>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="center-panel">
       <cms-document-item
         *ngFor="let documentEl of documents"
         [document]="documentEl"
-        (click)="onSelected(documentEl)"
-        ></cms-document-item>
+        (click)="onSelectedDocument(documentEl)"
+      ></cms-document-item>
     </div>
   </div>
-</section>
+
+</div>
