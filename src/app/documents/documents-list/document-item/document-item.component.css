@@ -10,3 +10,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+a:hover {
+  border: 2px solid burlywood;
+}
+
+a {
+  transition: all 300ms;
+}
