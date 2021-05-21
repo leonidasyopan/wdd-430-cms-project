@@ -11,7 +11,7 @@ export class MessageService {
 
   messages: Message [] =[];
 
-  // messageSelectedEvent = new EventEmitter<Message>();
+  messageChangedEvent = new EventEmitter<Message []>();
 
   constructor() {
     this.messages = MOCKMESSAGES;
@@ -31,6 +31,11 @@ export class MessageService {
     })
 
     return result ? result : null;
+  }
+
+  addMessage(message: Message) {
+    this.messages.push(message);
+    this.messageChangedEvent.emit(this.messages.slice());
   }
 }
 
