@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Document } from '../../documents.model'
+import { Document } from '../../document.model'
 
 @Component({
   selector: 'cms-document-item',
