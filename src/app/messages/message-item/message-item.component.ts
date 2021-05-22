@@ -11,7 +11,6 @@ import { ContactService } from '../../contacts/contact.service';
 })
 export class MessageItemComponent implements OnInit {
   @Input() message: Message;
-  // @Output() messageSelected = new EventEmitter<void>();
 
   messageSender: string;
 

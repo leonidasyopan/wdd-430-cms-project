@@ -26,7 +26,6 @@ export class MessageListComponent implements OnInit {
 
   onAddMessage(message: Message) {
     this.messages.push(message);
-    // this.messageService.messageSelectedEvent.emit(message);
   }
 
 }
