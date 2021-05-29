@@ -4,7 +4,11 @@
       <h4 class="title margin-left-right">{{ document?.name }}</h4>
       <div class="row pull-right margin-left-right">
         <a class="btn btn-primary spaced-button">View</a>
-        <a class="btn btn-info spaced-button">Edit</a>
+        <a
+          routerLink="{{document?.id}}/edit"
+          class="btn btn-info spaced-button"
+          (click)="onEditRecipe()"
+        >Edit</a>
         <a class="btn btn-danger spaced-button">Delete</a>
       </div>
     </div>
