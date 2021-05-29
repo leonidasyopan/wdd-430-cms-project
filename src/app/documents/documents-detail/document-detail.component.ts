@@ -34,7 +34,7 @@ export class DocumentDetailComponent implements OnInit {
     this.nativeWindow = this.windRefService.getNativeWindow();
   }
 
-  onEditRecipe() {
+  onEditDocument() {
     this.router.navigate(['edit'], {relativeTo: this.route});
   }
 

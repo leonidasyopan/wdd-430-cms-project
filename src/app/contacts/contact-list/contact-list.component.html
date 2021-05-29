@@ -1,15 +1,21 @@
-<section class="conctact-list-box">
-  <header>
-    <div><h3>Contacts</h3></div>
-    <div><button type="button" class="btn btn-success">New Contact</button></div>
-  </header>
-  <div class="row">
-    <div class="col-xs-12">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row pad-left-right">
+      <span class="pull-left title">Contacts</span>
+      <a
+        class="btn btn-success pull-right"
+        routerLink="new"
+        (click)="onNewContact()"
+      >New Contact</a>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="center-panel">
       <cms-contact-item
         *ngFor="let contactEl of contacts"
         [contact]="contactEl"
-        (click)="onSelected(contactEl)"
         ></cms-contact-item>
     </div>
   </div>
-</section>
+
+</div>

@@ -7,6 +7,8 @@ import { MessageListComponent } from "./messages/message-list/message-list.compo
 import { ContactsComponent } from "./contacts/contacts.component";
 import { DocumentEditComponent } from "./documents/document-edit/document-edit.component";
 import { DocumentDetailComponent } from "./documents/documents-detail/document-detail.component";
+import { ContactEditComponent } from "./contacts/contact-edit/contact-edit.component";
+import { ContactDetailComponent } from "./contacts/contact-detail/contact-detail.component";
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/documents', pathMatch: 'full' },
@@ -16,7 +18,11 @@ const appRoutes: Routes = [
     { path: ':id/edit', component: DocumentEditComponent },
   ] },
   { path: 'messages', component: MessageListComponent },
-  { path: 'contacts', component: ContactsComponent }
+  { path: 'contacts', component: ContactsComponent, children: [
+    { path: 'new', component: ContactEditComponent },
+    { path: ':id', component: ContactDetailComponent },
+    { path: ':id/edit', component: ContactEditComponent },
+  ]  }
 ]
 
 @NgModule({
@@ -27,6 +33,3 @@ const appRoutes: Routes = [
 export class AppRoutingModule {
 
 }
-
-
-

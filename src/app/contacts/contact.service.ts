@@ -12,6 +12,7 @@ export class ContactService {
   contacts: Contact [] =[];
 
   contactSelectedEvent = new EventEmitter<Contact>();
+  contactChangedEvent = new EventEmitter<Contact[]>();
 
   constructor() {
     this.contacts = MOCKCONTACTS;
@@ -31,5 +32,17 @@ export class ContactService {
     })
 
     return result ? result : null;
+  }
+
+  deleteContact(contact: Contact) {
+    if (!contact) {
+      return;
+    }
+    const position = this.contacts.indexOf(contact);
+    if (position < 0) {
+      return;
+    }
+    this.contacts.splice(position, 1);
+    this.contactChangedEvent.emit(this.contacts.slice());
   }
 }
