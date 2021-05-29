@@ -1,7 +1,8 @@
 <a
-  href="#"
+  routerLinkActive="active"
+  routerLink="{{ document?.id }}"
   class="list-group-item clearfix documentDiv"
   (click)="onSelected(); $event.preventDefault()"
 >
-  {{ document.name }}
+  {{ document?.name }}
 </a>

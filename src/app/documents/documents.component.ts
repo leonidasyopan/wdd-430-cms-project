@@ -15,11 +15,11 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.documentService.documentSelectedEvent
-    .subscribe(
-      (document: Document) => {
-        this.selectedDocument = document;
-      }
-    )
+      .subscribe(
+        (document: Document) => {
+          this.selectedDocument = document;
+        }
+      )
   }
 
 }
