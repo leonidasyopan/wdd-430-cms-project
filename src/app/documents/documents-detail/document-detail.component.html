@@ -11,8 +11,11 @@
           routerLink="{{document?.id}}/edit"
           class="btn btn-info spaced-button"
           (click)="onEditRecipe()"
-        >Edit</a>
-        <a class="btn btn-danger spaced-button">Delete</a>
+          >Edit</a>
+        <a
+          class="btn btn-danger spaced-button"
+          (click)="onDelete()"
+        >Delete</a>
       </div>
     </div>
   </div>
