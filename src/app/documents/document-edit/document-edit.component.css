@@ -1,0 +1,8 @@
+input.ng-invalid {
+  border: 1px solid red;
+}
+
+input.ng-untouched,
+input.ng-valid {
+  border-color: #ccc !important;
+}
