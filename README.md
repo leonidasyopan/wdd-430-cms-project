@@ -1,27 +1,57 @@
-# Cms
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://leonidasyopan.com/">
+    <img src="https://raw.githubusercontent.com/leonidasyopan/yopan-journal-frontend/master/src/assets/logo-leonidas-yopan-480x150.png" alt="Logo Leonidas Yopan" width="300" height="94" target="_blank">
+  </a>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.10.
+  <h3 align="center">Angular Project</h3>
 
-## Development server
+  <p align="center">
+    This project is part of my BYU-Idaho Bachelor's degree in Web Design and Development.
+    <br />
+    <br />
+    More information about Leonidas Yopan:
+    <br />
+    <a href="https://www.linkedin.com/in/leonidasyopan/" target="_blank">LinkedIn</a>
+    ·
+    <a href="https://twitter.com/leonidasyopan" target="_blank">Twitter</a>
+    ·
+    <a href="https://www.facebook.com/leonidasyopan" target="_blank">Facebook</a>
+  </p>
+</p>
+
+# Simple Content Management System
+
+## Technologies
+The project uses the Angular framework.
+
+_Install:_ after cloning or downloading the repository you must run the following code to install it with all its dependencies:
+
+```
+npm install
+```
+
+These are some of the dependencies used in the project:
+
+- eslint
+- prettier
+- typescript
+
+### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+<!-- LICENSE -->
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## License
 
-## Build
+This project is licensed under the terms of the MIT license.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+<!-- CONTACT -->
 
-## Running unit tests
+## Contact
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Leônidas Yopán - [@leonidasyopan](https://twitter.com/leonidasyopan)
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+LinkedIn: [https://www.linkedin.com/in/leonidasyopan/](https://www.linkedin.com/in/leonidasyopan/)
