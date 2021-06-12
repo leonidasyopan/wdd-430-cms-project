@@ -78,11 +78,18 @@
       </div>
 
       <div class="row">
-        <div class="form-group">
+        <div class="form-group-list">
           <label for="groupList">Group Contacts:</label>
 
+          <div *ngIf="!isContactDroppable" class="alert alert-danger">
+            <p>Contact can not be added to the group. It is already in the group or it is the currenct contact.</p>
+          </div>
+
           <div class="row" id="groupList"
-              style="min-height: 3rem;" >
+              style="min-height: 3rem;"
+              dnd-droppable
+              [dropZones]="['contactGroup']"
+              (onDropSuccess)="addToGroup($event)">
 
             <div *ngFor="let contact of groupContacts; let i = index">
               <div>

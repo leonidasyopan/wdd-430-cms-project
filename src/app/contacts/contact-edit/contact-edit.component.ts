@@ -16,6 +16,7 @@ export class ContactEditComponent implements OnInit {
   originalContact: Contact;
   contact: Contact;
   groupContacts: Contact[] = [];
+  isContactDroppable = true;
   editMode: boolean = false;
 
 
@@ -60,5 +61,40 @@ export class ContactEditComponent implements OnInit {
       this.contactService.addContact(newContact);
     }
     this.router.navigate(['/contacts']);
+  }
+
+  isInvalidContact(newContact: Contact) {
+    if (!newContact) return true;
+
+    if (this.contact && newContact.id === this.contact.id) {
+      this.isContactDroppable = false;
+      return true;
+    }
+
+    for(const contact of this.groupContacts) {
+      if (newContact.id === contact.id) {
+        this.isContactDroppable = false;
+        return true;
+      }
+    }
+
+    this.isContactDroppable = true;
+    return false;
+  }
+
+  addToGroup($event: any) {
+    const selectedContact: Contact = $event.dragData;
+    const invalidGroupContact = this.isInvalidContact(selectedContact);
+    if (invalidGroupContact){
+      return;
+    }
+    this.groupContacts.push(selectedContact);
+  }
+
+  onRemoveItem(index: number) {
+    if (index < 0 || index >= this.groupContacts.length) {
+      return;
+    }
+    this.groupContacts.splice(index, 1);
   }
 }
