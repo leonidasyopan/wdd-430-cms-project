@@ -16,7 +16,7 @@ export class ContactEditComponent implements OnInit {
   originalContact: Contact;
   contact: Contact;
   groupContacts: Contact[] = [];
-  isContactDroppable = true;
+  isValidContact = true;
   editMode: boolean = false;
 
 
@@ -67,18 +67,18 @@ export class ContactEditComponent implements OnInit {
     if (!newContact) return true;
 
     if (this.contact && newContact.id === this.contact.id) {
-      this.isContactDroppable = false;
+      this.isValidContact = false;
       return true;
     }
 
     for(const contact of this.groupContacts) {
       if (newContact.id === contact.id) {
-        this.isContactDroppable = false;
+        this.isValidContact = false;
         return true;
       }
     }
 
-    this.isContactDroppable = true;
+    this.isValidContact = true;
     return false;
   }
 
