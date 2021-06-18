@@ -16,7 +16,6 @@ export class DocumentService {
   maxDocumentId: number;
 
   documentSelectedEvent = new EventEmitter<Document>();
-  // documentChangedEvent = new EventEmitter<Document[]>();
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
