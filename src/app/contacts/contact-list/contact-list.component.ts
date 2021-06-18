@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 import { Contact } from '../contact.model'
 import { ContactService } from '../contact.service';
@@ -16,6 +17,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   contacts: Contact[] = [];
 
+  searchedTerm: string;
+
   constructor(
     private contactService: ContactService,
     private router: Router,
@@ -24,13 +27,6 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.contacts = this.contactService.getContacts();
-
-    // this.contactService.contactChangedEvent
-    //   .subscribe(
-    //     (contacts: Contact[]) => {
-    //       this.contacts = contacts;
-    //     }
-    //   )
 
     this.subscription = this.contactService.contactListChangedEvent
       .subscribe(
@@ -46,6 +42,10 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   onNewContact() {
     this.router.navigate(['new'], {relativeTo: this.route})
+  }
+
+  search(term: string) {
+    this.searchedTerm = term;
   }
 
 }

@@ -1,18 +1,37 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="row pad-left-right">
-      <span class="pull-left title">Contacts</span>
-      <a
-        class="btn btn-success pull-right"
-        routerLink="new"
-        (click)="onNewContact()"
-      >New Contact</a>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <span class="title pad-left-right">Contacts</span>
+          </div>
+          <div class="row">
+            <div class="input-group pull-left pad-left-right col-xs-7">
+              <input
+                type="text"
+                #searchBox
+                (keyup)="search(searchBox.value)"
+                class="form-control"
+                placeholder="Enter a search value"
+              >
+              <i class="fa fa-search"></i>
+              <!-- <div class="glyphicon glyphicon-search input-group-addon" (click)="search(searchBox.value)"></div> -->
+            </div>
+            <div class="pull-right pad-left-right">
+              <a class="btn btn-success" [routerLink]="['new']">New Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="panel-body">
     <div class="center-panel">
       <cms-contact-item
-        *ngFor="let contact of contacts"
+        *ngFor="let contact of contacts | contactsFilter:searchedTerm"
         [contact]="contact"
         dnd-draggable
         [dragEnabled]="true"

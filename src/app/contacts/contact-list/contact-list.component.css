@@ -11,3 +11,15 @@
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+i {
+  width: 2px;
+  position: relative;
+  top: -37px;
+  left: 215px;
+  font-size: 20px;
+  line-height: 40px;
+  cursor: pointer;
+  z-index: 20;
+  color: #8f8f8f;
+}
