@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Message } from '../message.model';
 import { Contact } from '../../contacts/contact.model';
@@ -18,7 +18,7 @@ export class MessageItemComponent implements OnInit {
 
   ngOnInit(): void {
     const contact: Contact = this.contactService.getContact(this.message.sender);
-    this.messageSender = contact.name;
+    this.messageSender = contact ? contact.name : 'Unkown';
   }
 
 }
