@@ -1,9 +1,9 @@
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Document } from './document.model';
-
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +17,21 @@ export class DocumentService {
 
   documentSelectedEvent = new EventEmitter<Document>();
 
-  constructor() {
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
+  constructor(private http: HttpClient) {
+    http.get<Document []>('https://yopan-wdd-430-default-rtdb.firebaseio.com/documents.json')
+    .subscribe(documents => {
+      this.setDocuments(documents);
+
+      this.maxDocumentId = this.getMaxId();
+
+      this.documents.sort((a, b) => a.name > b.name ? 1 : 0);
+
+      const documentsListClone: Document[] = this.documents.slice();
+
+      this.documentListChangedEvent.next(documentsListClone);
+    }, (error: any) => {
+      console.error(error);
+    })
   }
 
   getMaxId(): number {
@@ -35,6 +47,10 @@ export class DocumentService {
     })
 
     return maxId
+  }
+
+  setDocuments(documents: Document []) {
+    this.documents = documents;
   }
 
   getDocuments(){
