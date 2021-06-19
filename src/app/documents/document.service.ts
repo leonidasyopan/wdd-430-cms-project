@@ -9,6 +9,8 @@ import { Document } from './document.model';
   providedIn: 'root'
 })
 export class DocumentService {
+  baseURL: string = 'https://yopan-wdd-430-default-rtdb.firebaseio.com/';
+
   documentListChangedEvent = new Subject<Document[]>();
 
   documents: Document [] =[];
@@ -18,7 +20,7 @@ export class DocumentService {
   documentSelectedEvent = new EventEmitter<Document>();
 
   constructor(private http: HttpClient) {
-    http.get<Document []>('https://yopan-wdd-430-default-rtdb.firebaseio.com/documents.json')
+    http.get<Document []>(this.baseURL + 'documents.json')
     .subscribe(documents => {
       this.setDocuments(documents);
 
@@ -78,12 +80,11 @@ export class DocumentService {
 
     this.documents.splice(position, 1);
 
-    const documentsListClone: Document[] = this.documents.slice();
-
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments()
   }
 
   addDocument(newDocument: Document) {
+    debugger;
     if (!newDocument) return;
 
     this.maxDocumentId++;
@@ -92,9 +93,7 @@ export class DocumentService {
 
     this.documents.push(newDocument);
 
-    const documentsListClone: Document[] = this.documents.slice();
-
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments()
   }
 
 
@@ -109,8 +108,24 @@ export class DocumentService {
 
     this.documents[position] = newDocument;
 
-    const documentsListClone: Document[] = this.documents.slice();
+    this.storeDocuments()
+  }
 
-    this.documentListChangedEvent.next(documentsListClone)
+  storeDocuments() {
+    const documentsString = JSON.stringify(this.documents);
+
+    const headers= new HttpHeaders()
+      .set('content-type', 'application/json')
+
+    this.http.post(
+      this.baseURL + 'documents.json',
+      documentsString,
+      { 'headers': headers }
+    ).subscribe(response => {
+      console.log(response);
+      const documentsListClone: Document[] = this.documents.slice();
+
+      this.documentListChangedEvent.next(documentsListClone);
+    })
   }
 }
