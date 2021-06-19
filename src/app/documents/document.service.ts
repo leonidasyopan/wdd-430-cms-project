@@ -83,7 +83,6 @@ export class DocumentService {
   }
 
   addDocument(newDocument: Document) {
-    debugger;
     if (!newDocument) return;
 
     this.maxDocumentId++;
@@ -116,12 +115,11 @@ export class DocumentService {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
 
-    this.http.post(
+    this.http.put<Document[]>(
       this.baseURL + 'documents.json',
       documentsString,
       { 'headers': headers }
-    ).subscribe(response => {
-      console.log(response);
+    ).subscribe(() => {
       const documentsListClone: Document[] = this.documents.slice();
 
       this.documentListChangedEvent.next(documentsListClone);

@@ -80,12 +80,11 @@ export class MessageService {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
 
-    this.http.post(
+    this.http.put<Message[]>(
       this.baseURL + 'messages.json',
       messagesString,
       { 'headers': headers }
-    ).subscribe(response => {
-      console.log(response);
+    ).subscribe(() => {
       const messagesListClone: Message[] = this.messages.slice();
 
       this.messageListChangedEvent.next(messagesListClone);

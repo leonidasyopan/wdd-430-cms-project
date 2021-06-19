@@ -116,12 +116,11 @@ export class ContactService {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
 
-    this.http.post(
+    this.http.put<Contact[]>(
       this.baseURL + 'contacts.json',
       contactsString,
       { 'headers': headers }
-    ).subscribe(response => {
-      console.log(response);
+    ).subscribe(() => {
       const contactsListClone: Contact[] = this.contacts.slice();
 
       this.contactListChangedEvent.next(contactsListClone);
