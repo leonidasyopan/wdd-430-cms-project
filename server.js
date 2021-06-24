@@ -9,9 +9,9 @@ const logger = require('morgan');
 
 // import the routing file to handle the default (index) route
 const index = require('./server/routes/app');
-// const messagesRoutes = require('./server/routes/messages');
-// const contactsRoutes = require('./server/routes/contacts');
-// const documentsRoutes = require('./server/routes/docunents');
+const messagesRoutes = require('./server/routes/messages');
+const contactsRoutes = require('./server/routes/contacts');
+const documentsRoutes = require('./server/routes/documents');
 
 const app = express(); // create an instance of express
 
@@ -22,13 +22,6 @@ const app = express(); // create an instance of express
 // app.use(function(req, res, next) {
 //   res.render("index");
 // });
-
-
-// Tell express to use the following parsers for POST data
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({
-//   extended: false
-// }));
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false
