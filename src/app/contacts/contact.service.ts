@@ -19,16 +19,12 @@ export class ContactService {
 
   contacts: Contact [] =[];
 
-  // maxContactId: number;
-
   contactSelectedEvent = new EventEmitter<Contact>();
 
   constructor(private http: HttpClient) {
     http.get<Response>(this.baseURL + 'contacts')
     .subscribe(response => {
       this.setContacts(response.contacts);
-
-      // this.maxContactId = this.getMaxId();
 
       this.contacts.sort((a, b) => a.name > b.name ? 1 : 0);
 
@@ -39,21 +35,6 @@ export class ContactService {
       console.error(error);
     })
   }
-
-  // getMaxId(): number {
-
-  //   let maxId: number = 0
-
-  //   this.contacts.forEach((contact) => {
-  //     let currentId: number = Number(contact.id);
-
-  //     if(currentId > maxId) {
-  //       maxId = currentId
-  //     }
-  //   })
-
-  //   return maxId
-  // }
 
   setContacts(contacts: Contact []) {
     this.contacts = contacts;
@@ -83,15 +64,12 @@ export class ContactService {
 
     if (position < 0) return;
 
-    // delete from database
     this.http.delete('http://localhost:3000/contacts/' + contact.id)
       .subscribe(
         (response: Response) => {
           this.contacts.splice(position, 1);
 
-          // const contactsListClone: Contact[] = this.contacts.slice();
-
-          // this.contactListChangedEvent.next(contactsListClone);
+          this.refreshContactsListing();
         }
       );
   }
@@ -103,18 +81,14 @@ export class ContactService {
 
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    // add to database
     this.http.post<{ message: string, contact: Contact }>('http://localhost:3000/contacts',
       contact,
       { headers: headers })
       .subscribe(
         (responseData) => {
-          // add new contact to contacts
           this.contacts.push(responseData.contact);
 
-          // const contactsListClone: Contact[] = this.contacts.slice();
-
-          // this.contactListChangedEvent.next(contactsListClone);
+          this.refreshContactsListing();
         }
       );
   }
@@ -126,40 +100,24 @@ export class ContactService {
 
     if (position < 0) return;
 
-    // set the id of the new Contact to the id of the old Contact
     newContact.id = originalContact.id;
-    // newContact._id = originalContact._id;
 
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    // update database
     this.http.put('http://localhost:3000/contacts/' + originalContact.id,
       newContact, { headers: headers })
       .subscribe(
         (response: Response) => {
           this.contacts[position] = newContact;
 
-          // const contactsListClone: Contact[] = this.contacts.slice();
-
-          // this.contactListChangedEvent.next(contactsListClone);
+          this.refreshContactsListing();
         }
       );
   }
 
-  // storeContacts() {
-  //   const contactsString = JSON.stringify(this.contacts);
+  refreshContactsListing() {
+    const contactsListClone: Contact[] = this.contacts.slice();
 
-  //   const headers= new HttpHeaders()
-  //     .set('content-type', 'application/json')
-
-  //   this.http.put<Contact[]>(
-  //     this.baseURL + 'contacts.json',
-  //     contactsString,
-  //     { 'headers': headers }
-  //   ).subscribe(() => {
-  //     const contactsListClone: Contact[] = this.contacts.slice();
-
-  //     this.contactListChangedEvent.next(contactsListClone);
-  //   })
-  // }
+    this.contactListChangedEvent.next(contactsListClone);
+  }
 }
