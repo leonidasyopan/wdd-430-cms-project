@@ -5,15 +5,20 @@ var express = require('express');
 var router = express.Router();
 module.exports = router;
 
-
 router.get('/', (req, res, next) => {
-  Message.find().then(messages => {
-    res.status(200).json(messages);
-  }).catch(error => {
-    res.status(500).json({
-      message: "Error trying to fetch Messages"
+  Message.find()
+    .then(messages => {
+      res.status(200).json({
+          message: 'Documents fetched successfully!',
+          messages: messages
+        });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'An error occurred',
+        error: error
+      });
     });
-  })
 });
 
 router.post('/', (req, res, next) => {
@@ -29,8 +34,8 @@ router.post('/', (req, res, next) => {
   message.save()
     .then(createdMessage => {
       res.status(201).json({
-        message: 'Message added successfully',
-        document: createdMessage
+        msg: 'Message added successfully',
+        message: createdMessage
       });
     })
     .catch(error => {
@@ -56,7 +61,7 @@ router.put('/:id', (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-            message: 'An error occurred',
+            message: 'An error occurred...',
             error: error
           });
         });
@@ -89,7 +94,7 @@ router.delete("/:id", (req, res, next) => {
     .catch(error => {
       res.status(500).json({
         message: 'Message not found.',
-        error: { document: 'Message not found.'}
+        error: { message: 'Message not found.'}
       });
     });
 });

@@ -6,13 +6,20 @@ var router = express.Router();
 module.exports = router;
 
 router.get('/', (req, res, next) => {
-  Contact.find().then(contacts => {
-    res.status(200).json(contacts);
-  }).catch(error => {
-    res.status(500).json({
-      message: "Error trying to fetch Contacts"
+  Contact.find()
+    .populate('group')
+    .then(contacts => {
+      res.status(200).json({
+          message: 'Contacts fetched successfully!',
+          contacts: contacts
+        });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'An error occurred',
+        error: error
+      });
     });
-  })
 });
 
 router.post('/', (req, res, next) => {
@@ -31,7 +38,7 @@ router.post('/', (req, res, next) => {
     .then(createdContact => {
       res.status(201).json({
         message: 'Contact added successfully',
-        document: createdContact
+        contact: createdContact
       });
     })
     .catch(error => {
@@ -59,7 +66,7 @@ router.put('/:id', (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-            message: 'An error occurred',
+            message: 'An error occurred...',
             error: error
           });
         });
@@ -67,7 +74,7 @@ router.put('/:id', (req, res, next) => {
     .catch(error => {
       res.status(500).json({
         message: 'Contact not found.',
-        error: { document: 'Contact not found'}
+        error: { contact: 'Contact not found'}
       });
     });
 });

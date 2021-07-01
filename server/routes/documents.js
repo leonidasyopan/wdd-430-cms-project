@@ -5,15 +5,20 @@ var express = require('express');
 var router = express.Router();
 module.exports = router;
 
-
 router.get('/', (req, res, next) => {
-  Document.find().then(documents => {
-    res.status(200).json(documents);
-  }).catch(error => {
-    res.status(500).json({
-      message: "Error trying to fetch Documents"
+  Document.find()
+    .then(documents => {
+      res.status(200).json({
+          message: 'Documents fetched successfully!',
+          documents: documents
+        });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'An error occurred',
+        error: error
+      });
     });
-  })
 });
 
 router.post('/', (req, res, next) => {
@@ -56,7 +61,7 @@ router.put('/:id', (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-            message: 'An error occurred',
+            message: 'An error occurred...',
             error: error
           });
         });
