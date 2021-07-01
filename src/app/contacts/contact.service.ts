@@ -72,15 +72,24 @@ export class ContactService {
   }
 
   deleteContact(contact: Contact) {
+
     if (!contact) return;
 
-    const position: number = this.contacts.indexOf(contact);
+    const position = this.contacts.findIndex(cont => cont.id === contact.id);
 
     if (position < 0) return;
 
-    this.contacts.splice(position, 1);
+    // delete from database
+    this.http.delete('http://localhost:3000/contacts/' + contact.id)
+      .subscribe(
+        (response: Response) => {
+          this.contacts.splice(position, 1);
 
-    this.storeContacts()
+          // const contactsListClone: Contact[] = this.contacts.slice();
+
+          // this.contactListChangedEvent.next(contactsListClone);
+        }
+      );
   }
 
   addContact(contact: Contact) {
@@ -109,15 +118,28 @@ export class ContactService {
   updateContact(originalContact: Contact, newContact: Contact) {
     if (!originalContact || !newContact) return;
 
-    const position: number = this.contacts.indexOf(originalContact);
+    const position = this.contacts.findIndex(contact => contact.id === originalContact.id);
 
     if (position < 0) return;
 
+    // set the id of the new Contact to the id of the old Contact
     newContact.id = originalContact.id;
+    // newContact._id = originalContact._id;
 
-    this.contacts[position] = newContact;
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    this.storeContacts()
+    // update database
+    this.http.put('http://localhost:3000/contacts/' + originalContact.id,
+      newContact, { headers: headers })
+      .subscribe(
+        (response: Response) => {
+          this.contacts[position] = newContact;
+
+          // const contactsListClone: Contact[] = this.contacts.slice();
+
+          // this.contactListChangedEvent.next(contactsListClone);
+        }
+      );
   }
 
   storeContacts() {

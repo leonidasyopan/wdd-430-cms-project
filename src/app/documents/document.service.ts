@@ -71,17 +71,25 @@ export class DocumentService {
   }
 
   deleteDocument(document: Document) {
+
     if (!document) return;
 
-    const position: number = this.documents.indexOf(document);
+    const position = this.documents.findIndex(doc => doc.id === document.id);
 
     if (position < 0) return;
 
-    this.documents.splice(position, 1);
+    // delete from database
+    this.http.delete('http://localhost:3000/documents/' + document.id)
+      .subscribe(
+        (response: Response) => {
+          this.documents.splice(position, 1);
 
-    this.storeDocuments()
+          // const documentsListClone: Document[] = this.documents.slice();
+
+          // this.documentListChangedEvent.next(documentsListClone);
+        }
+      );
   }
-
 
   addDocument(document: Document) {
     if (!document) return;
@@ -109,15 +117,28 @@ export class DocumentService {
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) return;
 
-    const position: number = this.documents.indexOf(originalDocument);
+    const position = this.documents.findIndex(document => document.id === originalDocument.id);
 
     if (position < 0) return;
 
+    // set the id of the new Document to the id of the old Document
     newDocument.id = originalDocument.id;
+    // newDocument._id = originalDocument._id;
 
-    this.documents[position] = newDocument;
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    this.storeDocuments()
+    // update database
+    this.http.put('http://localhost:3000/documents/' + originalDocument.id,
+      newDocument, { headers: headers })
+      .subscribe(
+        (response: Response) => {
+          this.documents[position] = newDocument;
+
+          // const documentsListClone: Document[] = this.documents.slice();
+
+          // this.documentListChangedEvent.next(documentsListClone);
+        }
+      );
   }
 
   storeDocuments() {
