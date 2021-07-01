@@ -21,14 +21,11 @@ export class MessageService {
 
   messageChangedEvent = new EventEmitter<Message []>();
 
-  // maxMessageId: number;
 
   constructor(private http: HttpClient) {
     http.get<Response>(this.baseURL + 'messages')
     .subscribe(response => {
       this.setMessages(response.messages);
-
-      // this.maxMessageId = this.getMaxId();
 
       const messagesListClone: Message[] = this.messages.slice();
 
@@ -41,21 +38,6 @@ export class MessageService {
   setMessages(messages: Message []) {
     this.messages = messages;
   }
-
-  // getMaxId(): number {
-
-  //   let maxId: number = 0
-
-  //   this.messages.forEach((message) => {
-  //     let currentId: number = Number(message.id);
-
-  //     if(currentId > maxId) {
-  //       maxId = currentId
-  //     }
-  //   })
-
-  //   return maxId
-  // }
 
   getMessages(): Message[] {
     return this.messages.slice();
@@ -80,37 +62,22 @@ export class MessageService {
 
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    // add to database
     this.http.post<{ msg: string, message: Message }>('http://localhost:3000/messages',
       message,
       { headers: headers })
       .subscribe(
         (responseData) => {
-          // add new message to messages
           this.messages.push(responseData.message);
 
-          // const messagesListClone: Message[] = this.messages.slice();
-
-          // this.messageListChangedEvent.next(messagesListClone);
+          this.refreshDocumentsListing();
         }
       );
   }
 
-  // storeMessages() {
-  //   const messagesString = JSON.stringify(this.messages);
+  refreshDocumentsListing() {
+    const messagesListClone: Message[] = this.messages.slice();
 
-  //   const headers= new HttpHeaders()
-  //     .set('content-type', 'application/json')
-
-  //   this.http.put<Message[]>(
-  //     this.baseURL + 'messages.json',
-  //     messagesString,
-  //     { 'headers': headers }
-  //   ).subscribe(() => {
-  //     const messagesListClone: Message[] = this.messages.slice();
-
-  //     this.messageListChangedEvent.next(messagesListClone);
-  //   })
-  // }
+    this.messageListChangedEvent.next(messagesListClone);
+  }
 }
 
