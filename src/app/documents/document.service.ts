@@ -20,16 +20,12 @@ export class DocumentService {
 
   documents: Document [] = [];
 
-  // maxDocumentId: number;
-
   documentSelectedEvent = new EventEmitter<Document>();
 
   constructor(private http: HttpClient) {
     http.get<Response>(this.baseURL + 'documents')
     .subscribe(response => {
       this.setDocuments(response.documents);
-
-      // this.maxDocumentId = this.getMaxId();
 
       this.documents.sort((a, b) => a.name > b.name ? 1 : 0);
 
@@ -40,21 +36,6 @@ export class DocumentService {
       console.error(error);
     })
   }
-
-  // getMaxId(): number {
-
-  //   let maxId: number = 0
-
-  //   this.documents.forEach((document) => {
-  //     let currentId: number = Number(document.id);
-
-  //     if(currentId > maxId) {
-  //       maxId = currentId
-  //     }
-  //   })
-
-  //   return maxId
-  // }
 
   setDocuments(documents: Document []) {
     this.documents = documents;
@@ -84,15 +65,12 @@ export class DocumentService {
 
     if (position < 0) return;
 
-    // delete from database
     this.http.delete('http://localhost:3000/documents/' + document.id)
       .subscribe(
         (response: Response) => {
           this.documents.splice(position, 1);
 
-          // const documentsListClone: Document[] = this.documents.slice();
-
-          // this.documentListChangedEvent.next(documentsListClone);
+          this.refreshDocumentsListing()
         }
       );
   }
@@ -104,18 +82,14 @@ export class DocumentService {
 
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    // add to database
     this.http.post<{ message: string, document: Document }>('http://localhost:3000/documents',
       document,
       { headers: headers })
       .subscribe(
         (responseData) => {
-          // add new document to documents
           this.documents.push(responseData.document);
 
-          // const documentsListClone: Document[] = this.documents.slice();
-
-          // this.documentListChangedEvent.next(documentsListClone);
+          this.refreshDocumentsListing()
         }
       );
   }
@@ -127,40 +101,24 @@ export class DocumentService {
 
     if (position < 0) return;
 
-    // set the id of the new Document to the id of the old Document
     newDocument.id = originalDocument.id;
-    // newDocument._id = originalDocument._id;
 
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    // update database
     this.http.put('http://localhost:3000/documents/' + originalDocument.id,
       newDocument, { headers: headers })
       .subscribe(
         (response: Response) => {
           this.documents[position] = newDocument;
 
-          // const documentsListClone: Document[] = this.documents.slice();
-
-          // this.documentListChangedEvent.next(documentsListClone);
+          this.refreshDocumentsListing()
         }
       );
   }
 
-  // storeDocuments() {
-  //   const documentsString = JSON.stringify(this.documents);
+  refreshDocumentsListing() {
+    const documentsListClone: Document[] = this.documents.slice();
 
-  //   const headers= new HttpHeaders()
-  //     .set('content-type', 'application/json')
-
-  //   this.http.put<Document[]>(
-  //     this.baseURL + 'documents.json',
-  //     documentsString,
-  //     { 'headers': headers }
-  //   ).subscribe(() => {
-  //     const documentsListClone: Document[] = this.documents.slice();
-
-  //     this.documentListChangedEvent.next(documentsListClone);
-  //   })
-  // }
+    this.documentListChangedEvent.next(documentsListClone);
+  }
 }
