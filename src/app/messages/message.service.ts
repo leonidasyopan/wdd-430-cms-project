@@ -4,6 +4,11 @@ import { Subject } from 'rxjs';
 
 import { Message } from './message.model';
 
+interface Response {
+  message: string,
+  messages: Message []
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,14 +21,14 @@ export class MessageService {
 
   messageChangedEvent = new EventEmitter<Message []>();
 
-  maxMessageId: number;
+  // maxMessageId: number;
 
   constructor(private http: HttpClient) {
-    http.get<Message []>(this.baseURL + 'messages')
-    .subscribe(messages => {
-      this.setMessages(messages);
+    http.get<Response>(this.baseURL + 'messages')
+    .subscribe(response => {
+      this.setMessages(response.messages);
 
-      this.maxMessageId = this.getMaxId();
+      // this.maxMessageId = this.getMaxId();
 
       const messagesListClone: Message[] = this.messages.slice();
 
@@ -37,20 +42,20 @@ export class MessageService {
     this.messages = messages;
   }
 
-  getMaxId(): number {
+  // getMaxId(): number {
 
-    let maxId: number = 0
+  //   let maxId: number = 0
 
-    this.messages.forEach((message) => {
-      let currentId: number = Number(message.id);
+  //   this.messages.forEach((message) => {
+  //     let currentId: number = Number(message.id);
 
-      if(currentId > maxId) {
-        maxId = currentId
-      }
-    })
+  //     if(currentId > maxId) {
+  //       maxId = currentId
+  //     }
+  //   })
 
-    return maxId
-  }
+  //   return maxId
+  // }
 
   getMessages(): Message[] {
     return this.messages.slice();

@@ -4,26 +4,32 @@ import { Subject } from 'rxjs';
 
 import { Document } from './document.model';
 
+interface Response {
+  message: string,
+  documents: Document []
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class DocumentService {
   baseURL: string = 'http://localhost:3000/';
 
   documentListChangedEvent = new Subject<Document[]>();
 
-  documents: Document [] =[];
+  documents: Document [] = [];
 
-  maxDocumentId: number;
+  // maxDocumentId: number;
 
   documentSelectedEvent = new EventEmitter<Document>();
 
   constructor(private http: HttpClient) {
-    http.get<Document []>(this.baseURL + 'documents')
-    .subscribe(documents => {
-      this.setDocuments(documents);
+    http.get<Response>(this.baseURL + 'documents')
+    .subscribe(response => {
+      this.setDocuments(response.documents);
 
-      this.maxDocumentId = this.getMaxId();
+      // this.maxDocumentId = this.getMaxId();
 
       this.documents.sort((a, b) => a.name > b.name ? 1 : 0);
 
@@ -35,20 +41,20 @@ export class DocumentService {
     })
   }
 
-  getMaxId(): number {
+  // getMaxId(): number {
 
-    let maxId: number = 0
+  //   let maxId: number = 0
 
-    this.documents.forEach((document) => {
-      let currentId: number = Number(document.id);
+  //   this.documents.forEach((document) => {
+  //     let currentId: number = Number(document.id);
 
-      if(currentId > maxId) {
-        maxId = currentId
-      }
-    })
+  //     if(currentId > maxId) {
+  //       maxId = currentId
+  //     }
+  //   })
 
-    return maxId
-  }
+  //   return maxId
+  // }
 
   setDocuments(documents: Document []) {
     this.documents = documents;

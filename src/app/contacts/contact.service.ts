@@ -4,6 +4,10 @@ import { Subject } from 'rxjs';
 
 import { Contact } from './contact.model';
 
+interface Response {
+  message: string,
+  contacts: Contact []
+}
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +19,16 @@ export class ContactService {
 
   contacts: Contact [] =[];
 
-  maxContactId: number;
+  // maxContactId: number;
 
   contactSelectedEvent = new EventEmitter<Contact>();
 
   constructor(private http: HttpClient) {
-    http.get<Contact []>(this.baseURL + 'contacts')
-    .subscribe(contacts => {
-      this.setContacts(contacts);
+    http.get<Response>(this.baseURL + 'contacts')
+    .subscribe(response => {
+      this.setContacts(response.contacts);
 
-      this.maxContactId = this.getMaxId();
+      // this.maxContactId = this.getMaxId();
 
       this.contacts.sort((a, b) => a.name > b.name ? 1 : 0);
 
@@ -36,20 +40,20 @@ export class ContactService {
     })
   }
 
-  getMaxId(): number {
+  // getMaxId(): number {
 
-    let maxId: number = 0
+  //   let maxId: number = 0
 
-    this.contacts.forEach((contact) => {
-      let currentId: number = Number(contact.id);
+  //   this.contacts.forEach((contact) => {
+  //     let currentId: number = Number(contact.id);
 
-      if(currentId > maxId) {
-        maxId = currentId
-      }
-    })
+  //     if(currentId > maxId) {
+  //       maxId = currentId
+  //     }
+  //   })
 
-    return maxId
-  }
+  //   return maxId
+  // }
 
   setContacts(contacts: Contact []) {
     this.contacts = contacts;
