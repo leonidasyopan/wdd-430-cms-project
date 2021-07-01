@@ -8,7 +8,7 @@ import { Document } from './document.model';
   providedIn: 'root'
 })
 export class DocumentService {
-  baseURL: string = 'https://yopan-wdd-430-default-rtdb.firebaseio.com/';
+  baseURL: string = 'http://localhost:3000/';
 
   documentListChangedEvent = new Subject<Document[]>();
 
@@ -19,7 +19,7 @@ export class DocumentService {
   documentSelectedEvent = new EventEmitter<Document>();
 
   constructor(private http: HttpClient) {
-    http.get<Document []>(this.baseURL + 'documents.json')
+    http.get<Document []>(this.baseURL + 'documents')
     .subscribe(documents => {
       this.setDocuments(documents);
 
@@ -82,18 +82,29 @@ export class DocumentService {
     this.storeDocuments()
   }
 
-  addDocument(newDocument: Document) {
-    if (!newDocument) return;
 
-    this.maxDocumentId++;
+  addDocument(document: Document) {
+    if (!document) return;
 
-    newDocument.id = this.maxDocumentId.toString();
+    document.id = '';
 
-    this.documents.push(newDocument);
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    this.storeDocuments()
+    // add to database
+    this.http.post<{ message: string, document: Document }>('http://localhost:3000/documents',
+      document,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new document to documents
+          this.documents.push(responseData.document);
+
+          // const documentsListClone: Document[] = this.documents.slice();
+
+          // this.documentListChangedEvent.next(documentsListClone);
+        }
+      );
   }
-
 
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) return;

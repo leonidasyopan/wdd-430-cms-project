@@ -9,7 +9,7 @@ import { Contact } from './contact.model';
   providedIn: 'root'
 })
 export class ContactService {
-  baseURL: string = 'https://yopan-wdd-430-default-rtdb.firebaseio.com/';
+  baseURL: string = 'http://localhost:3000/';
 
   contactListChangedEvent = new Subject<Contact[]>();
 
@@ -20,7 +20,7 @@ export class ContactService {
   contactSelectedEvent = new EventEmitter<Contact>();
 
   constructor(private http: HttpClient) {
-    http.get<Contact []>(this.baseURL + 'contacts.json')
+    http.get<Contact []>(this.baseURL + 'contacts')
     .subscribe(contacts => {
       this.setContacts(contacts);
 
@@ -83,18 +83,28 @@ export class ContactService {
     this.storeContacts()
   }
 
-  addContact(newContact: Contact) {
-    if (!newContact) return;
+  addContact(contact: Contact) {
+    if (!contact) return;
 
-    this.maxContactId++;
+    contact.id = '';
 
-    newContact.id = this.maxContactId.toString();
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    this.contacts.push(newContact);
+    // add to database
+    this.http.post<{ message: string, contact: Contact }>('http://localhost:3000/contacts',
+      contact,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new contact to contacts
+          this.contacts.push(responseData.contact);
 
-    this.storeContacts()
+          // const contactsListClone: Contact[] = this.contacts.slice();
+
+          // this.contactListChangedEvent.next(contactsListClone);
+        }
+      );
   }
-
 
   updateContact(originalContact: Contact, newContact: Contact) {
     if (!originalContact || !newContact) return;

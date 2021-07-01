@@ -8,7 +8,7 @@ import { Message } from './message.model';
   providedIn: 'root'
 })
 export class MessageService {
-  baseURL: string = 'https://yopan-wdd-430-default-rtdb.firebaseio.com/';
+  baseURL: string = 'http://localhost:3000/';
 
   messages: Message [] =[];
 
@@ -19,7 +19,7 @@ export class MessageService {
   maxMessageId: number;
 
   constructor(private http: HttpClient) {
-    http.get<Message []>(this.baseURL + 'messages.json')
+    http.get<Message []>(this.baseURL + 'messages')
     .subscribe(messages => {
       this.setMessages(messages);
 
@@ -69,9 +69,26 @@ export class MessageService {
   }
 
   addMessage(message: Message) {
-    this.messages.push(message);
+    if (!message) return;
 
-    this.storeMessages()
+    message.id = '';
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // add to database
+    this.http.post<{ msg: string, message: Message }>('http://localhost:3000/messages',
+      message,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new message to messages
+          this.messages.push(responseData.message);
+
+          // const messagesListClone: Message[] = this.messages.slice();
+
+          // this.messageListChangedEvent.next(messagesListClone);
+        }
+      );
   }
 
   storeMessages() {
