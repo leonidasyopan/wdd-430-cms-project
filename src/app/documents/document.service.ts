@@ -141,20 +141,20 @@ export class DocumentService {
       );
   }
 
-  storeDocuments() {
-    const documentsString = JSON.stringify(this.documents);
+  // storeDocuments() {
+  //   const documentsString = JSON.stringify(this.documents);
 
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
+  //   const headers= new HttpHeaders()
+  //     .set('content-type', 'application/json')
 
-    this.http.put<Document[]>(
-      this.baseURL + 'documents.json',
-      documentsString,
-      { 'headers': headers }
-    ).subscribe(() => {
-      const documentsListClone: Document[] = this.documents.slice();
+  //   this.http.put<Document[]>(
+  //     this.baseURL + 'documents.json',
+  //     documentsString,
+  //     { 'headers': headers }
+  //   ).subscribe(() => {
+  //     const documentsListClone: Document[] = this.documents.slice();
 
-      this.documentListChangedEvent.next(documentsListClone);
-    })
-  }
+  //     this.documentListChangedEvent.next(documentsListClone);
+  //   })
+  // }
 }

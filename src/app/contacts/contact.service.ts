@@ -142,20 +142,20 @@ export class ContactService {
       );
   }
 
-  storeContacts() {
-    const contactsString = JSON.stringify(this.contacts);
+  // storeContacts() {
+  //   const contactsString = JSON.stringify(this.contacts);
 
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
+  //   const headers= new HttpHeaders()
+  //     .set('content-type', 'application/json')
 
-    this.http.put<Contact[]>(
-      this.baseURL + 'contacts.json',
-      contactsString,
-      { 'headers': headers }
-    ).subscribe(() => {
-      const contactsListClone: Contact[] = this.contacts.slice();
+  //   this.http.put<Contact[]>(
+  //     this.baseURL + 'contacts.json',
+  //     contactsString,
+  //     { 'headers': headers }
+  //   ).subscribe(() => {
+  //     const contactsListClone: Contact[] = this.contacts.slice();
 
-      this.contactListChangedEvent.next(contactsListClone);
-    })
-  }
+  //     this.contactListChangedEvent.next(contactsListClone);
+  //   })
+  // }
 }

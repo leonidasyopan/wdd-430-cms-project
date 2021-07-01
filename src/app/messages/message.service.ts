@@ -91,21 +91,21 @@ export class MessageService {
       );
   }
 
-  storeMessages() {
-    const messagesString = JSON.stringify(this.messages);
+  // storeMessages() {
+  //   const messagesString = JSON.stringify(this.messages);
 
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
+  //   const headers= new HttpHeaders()
+  //     .set('content-type', 'application/json')
 
-    this.http.put<Message[]>(
-      this.baseURL + 'messages.json',
-      messagesString,
-      { 'headers': headers }
-    ).subscribe(() => {
-      const messagesListClone: Message[] = this.messages.slice();
+  //   this.http.put<Message[]>(
+  //     this.baseURL + 'messages.json',
+  //     messagesString,
+  //     { 'headers': headers }
+  //   ).subscribe(() => {
+  //     const messagesListClone: Message[] = this.messages.slice();
 
-      this.messageListChangedEvent.next(messagesListClone);
-    })
-  }
+  //     this.messageListChangedEvent.next(messagesListClone);
+  //   })
+  // }
 }
 
