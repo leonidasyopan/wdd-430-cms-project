@@ -26,6 +26,8 @@ export class ContactService {
     .subscribe(response => {
       this.setContacts(response.contacts);
 
+      localStorage.setItem('contacts', JSON.stringify(response.contacts));
+
       this.contacts.sort((a, b) => a.name > b.name ? 1 : 0);
 
       const contactsListClone: Contact[] = this.contacts.slice();
@@ -45,6 +47,10 @@ export class ContactService {
   }
 
   getContact(id: string): Contact {
+    if(this.contacts.length < 1) {
+      this.contacts = JSON.parse(localStorage.getItem('contacts'))
+    }
+
     let result: Contact;
 
     this.contacts.forEach(contact => {
